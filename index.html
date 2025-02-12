@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Recetas - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .recent-activity {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-left: 3px solid var(--accent-color);
+            margin-bottom: 1rem;
+            background: var(--light-bg);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils me-2"></i>Recetas App
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recetas.html">
+                            <i class="fas fa-book me-1"></i>Recetas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ingredientes.html">
+                            <i class="fas fa-carrot me-1"></i>Ingredientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="lugares.html">
+                            <i class="fas fa-globe me-1"></i>Lugares
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="welcome-section">
+        <div class="container">
+            <h1 class="display-4 animate__animated animate__fadeIn">Bienvenido al Sistema de Gestión de Recetas</h1>
+            <p class="lead animate__animated animate__fadeIn animate__delay-1s">
+                Administra tus recetas, ingredientes y lugares de origen de manera eficiente.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stat-card animate__animated animate__fadeInUp">
+                    <div class="card-body text-center">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-number" id="totalRecetas">0</div>
+                        <div class="stat-label">Recetas Registradas</div>
+                        <a href="recetas.html" class="action-btn">
+                            Gestionar Recetas
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="card-body text-center">
+                        <div class="stat-icon">
+                            <i class="fas fa-carrot"></i>
+                        </div>
+                        <div class="stat-number" id="totalIngredientes">0</div>
+                        <div class="stat-label">Ingredientes Disponibles</div>
+                        <a href="ingredientes.html" class="action-btn">
+                            Gestionar Ingredientes
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="card-body text-center">
+                        <div class="stat-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="stat-number" id="totalLugares">0</div>
+                        <div class="stat-label">Lugares de Origen</div>
+                        <a href="lugares.html" class="action-btn">
+                            Gestionar Lugares
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h3 class="mb-4"><i class="fas fa-bolt me-2"></i>Acciones Rápidas</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="recetas.html" class="btn btn-light w-100 mb-3">
+                        <i class="fas fa-plus me-2"></i>Nueva Receta
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="ingredientes.html" class="btn btn-light w-100 mb-3">
+                        <i class="fas fa-plus me-2"></i>Nuevo Ingrediente
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="lugares.html" class="btn btn-light w-100 mb-3">
+                        <i class="fas fa-plus me-2"></i>Nuevo Lugar
+                    </a>
+                </div>
+                <div class="col-md-3">
+                   
+                    <button class="btn btn-light w-100 mb-3" onclick="exportarPDF()">
+                        <i class="fas fa-file-pdf me-2"></i>Exportar PDF
+                    </button>
+                    <button class="btn btn-light w-100 mb-3" onclick="exportarExcel()">
+                        <i class="fas fa-file-excel me-2"></i>Exportar Excel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="recent-activity">
+            <h3 class="mb-4"><i class="fas fa-history me-2"></i>Actividad Reciente</h3>
+            <div id="actividadReciente"></div>
+        </div>
+    </div>
+    <!--  JsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- SheetJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarEstadisticas();
+            mostrarActividadReciente();
+        });
+
+        function actualizarEstadisticas() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const ingredientes = JSON.parse(localStorage.getItem('ingredientes')) || [];
+            const lugares = JSON.parse(localStorage.getItem('lugares')) || [];
+
+            document.getElementById('totalRecetas').textContent = recetas.length;
+            document.getElementById('totalIngredientes').textContent = ingredientes.length;
+            document.getElementById('totalLugares').textContent = lugares.length;
+        }
+
+        function mostrarActividadReciente() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const actividadContainer = document.getElementById('actividadReciente');
+
+            if (recetas.length === 0) {
+                actividadContainer.innerHTML = '<div class="activity-item">No hay actividad reciente</div>';
+                return;
+            }
+
+            const ultimasRecetas = recetas.slice(-3).reverse();
+            ultimasRecetas.forEach(receta => {
+                const elemento = document.createElement('div');
+                elemento.className = 'activity-item';
+                elemento.innerHTML = `
+                    <h5 class="mb-1">${receta.nombre}</h5>
+                    <p class="mb-1">Tiempo de preparación: ${receta.tiempo} minutos</p>
+                    <small>Lugar de origen: ${receta.lugar}</small>
+                `;
+                actividadContainer.appendChild(elemento);
+            });
+        }
+
+        function exportarDatos() {
+            const datos = {
+                recetas: JSON.parse(localStorage.getItem('recetas')) || [],
+                ingredientes: JSON.parse(localStorage.getItem('ingredientes')) || [],
+                lugares: JSON.parse(localStorage.getItem('lugares')) || []
+            };
+
+            const blob = new Blob([JSON.stringify(datos, null, 2)], {
+                type: 'application/json'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'recetas_backup.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportarPDF() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const ingredientes = JSON.parse(localStorage.getItem('ingredientes')) || [];
+            const lugares = JSON.parse(localStorage.getItem('lugares')) || [];
+
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            let y = 20;
+
+            doc.setFontSize(16);
+            doc.text("Recetas", 10, y);
+            y += 10;
+
+            recetas.forEach(receta => {
+                doc.setFontSize(12);
+                doc.text(`- ${receta.nombre}`, 15, y);
+                y += 7;
+            });
+
+            doc.setFontSize(16);
+            doc.text("Ingredientes", 10, y);
+            y += 10;
+
+            ingredientes.forEach(ingrediente => {
+                doc.setFontSize(12);
+                doc.text(`- ${ingrediente.nombre}`, 15, y);
+                y += 7;
+            });
+
+            doc.setFontSize(16);
+            doc.text("Lugares", 10, y);
+            y += 10;
+
+            lugares.forEach(lugar => {
+                doc.setFontSize(12);
+                doc.text(`- ${lugar.nombre}`, 15, y);
+                y += 7;
+            });
+
+            doc.save('recetas.pdf');
+        }
+
+        function exportarExcel() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const ingredientes = JSON.parse(localStorage.getItem('ingredientes')) || [];
+            const lugares = JSON.parse(localStorage.getItem('lugares')) || [];
+
+            const wb = XLSX.utils.book_new();
+
+            const recetasWs = XLSX.utils.json_to_sheet(recetas);
+            XLSX.utils.book_append_sheet(wb, recetasWs, "Recetas");
+
+            const ingredientesWs = XLSX.utils.json_to_sheet(ingredientes);
+            XLSX.utils.book_append_sheet(wb, ingredientesWs, "Ingredientes");
+
+            const lugaresWs = XLSX.utils.json_to_sheet(lugares);
+            XLSX.utils.book_append_sheet(wb, lugaresWs, "Lugares");
+
+            XLSX.writeFile(wb, 'recetas.xlsx');
+        }
+    </script>
+</body>
+
+</html>

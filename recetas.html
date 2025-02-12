@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Recetas - Recetas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .recent-activity {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-left: 3px solid var(--accent-color);
+            margin-bottom: 1rem;
+            background: var(--light-bg);
+            border-radius: 5px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils me-2"></i>Recetas App
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recetas.html">
+                            <i class="fas fa-book me-1"></i>Recetas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ingredientes.html">
+                            <i class="fas fa-carrot me-1"></i>Ingredientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="lugares.html">
+                            <i class="fas fa-globe me-1"></i>Lugares
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2 class="mb-4">Gestión de Recetas</h2>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <form id="recetaForm" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre de la Receta</label>
+                            <input type="text" class="form-control" id="nombreReceta" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tiempo de Preparación (minutos)</label>
+                            <input type="number" class="form-control" id="tiempo" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Preparación</label>
+                        <textarea class="form-control" id="preparacion" rows="3" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ingredientes</label>
+                            <select class="form-control" id="ingredientes" multiple required>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Lugar de Origen</label>
+                            <select class="form-control" id="lugar" required>
+                                <option value="">Seleccione un lugar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Receta</button>
+                    <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">Limpiar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table id="tablaDatos" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Preparación</th>
+                            <th>Tiempo</th>
+                            <th>Ingredientes</th>
+                            <th>Lugar</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Recetas App. Todos los derechos reservados.</p>
+            <p>Desarrollado por <a href="#">Tu Nombre</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <!-- JsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- SheetJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+
+    <script>
+        let editandoId = null;
+
+        // Inicialización simple de DataTable
+        const tabla = $('#tablaDatos').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+            }
+        });
+
+        // Inicializar Select2
+        $('#ingredientes').select2({
+            placeholder: 'Seleccione ingredientes'
+        });
+
+        $('#lugar').select2({
+            placeholder: 'Seleccione un lugar'
+        });
+
+        function cargarIngredientes() {
+            const ingredientes = JSON.parse(localStorage.getItem('ingredientes')) || [];
+            const select = document.getElementById('ingredientes');
+            select.innerHTML = '';
+            ingredientes.forEach(ingrediente => {
+                const option = new Option(ingrediente.nombre, ingrediente.nombre);
+                select.add(option);
+            });
+        }
+
+        function cargarLugares() {
+            const lugares = JSON.parse(localStorage.getItem('lugares')) || [];
+            const select = document.getElementById('lugar');
+            select.innerHTML = '<option value="">Seleccione un lugar</option>';
+            lugares.forEach(lugar => {
+                const option = new Option(lugar.nombre, lugar.nombre);
+                select.add(option);
+            });
+        }
+
+        function mostrarNotificacion(mensaje, tipo) {
+            iziToast[tipo]({
+                title: tipo === 'success' ? 'Éxito' : 'Error',
+                message: mensaje,
+                position: 'topRight'
+            });
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('recetaForm').reset();
+            $('#ingredientes').val(null).trigger('change');
+            $('#lugar').val(null).trigger('change');
+            editandoId = null;
+        }
+
+        function cargarDatos() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            tabla.clear();
+
+            recetas.forEach((receta, index) => {
+                tabla.row.add([
+                    receta.nombre,
+                    receta.preparacion,
+                    receta.tiempo,
+                    Array.isArray(receta.ingredientes) ? receta.ingredientes.join(', ') : '',
+                    receta.lugar || '',
+                    `<div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-primary" onclick="editarReceta(${index})">Editar</button>
+                        <button class="btn btn-sm btn-danger" onclick="eliminarReceta(${index})">Eliminar</button>
+                    </div>`
+                ]);
+            });
+
+            tabla.draw();
+        }
+
+        function editarReceta(index) {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const receta = recetas[index];
+            document.getElementById('nombreReceta').value = receta.nombre;
+            document.getElementById('preparacion').value = receta.preparacion;
+            document.getElementById('tiempo').value = receta.tiempo;
+            $('#ingredientes').val(receta.ingredientes).trigger('change');
+            $('#lugar').val(receta.lugar).trigger('change');
+            editandoId = index;
+        }
+
+        function eliminarReceta(index) {
+            if (confirm('¿Está seguro de eliminar esta receta?')) {
+                const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+                recetas.splice(index, 1);
+                localStorage.setItem('recetas', JSON.stringify(recetas));
+                mostrarNotificacion('Receta eliminada con éxito', 'success');
+                cargarDatos();
+            }
+        }
+
+        document.getElementById('recetaForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const receta = {
+                nombre: document.getElementById('nombreReceta').value.trim(),
+                preparacion: document.getElementById('preparacion').value.trim(),
+                tiempo: document.getElementById('tiempo').value,
+                ingredientes: $('#ingredientes').val() || [],
+                lugar: document.getElementById('lugar').value
+            };
+
+            if (!receta.nombre || !receta.preparacion || !receta.tiempo || !receta.lugar || receta.ingredientes.length === 0) {
+                mostrarNotificacion('Por favor complete todos los campos', 'error');
+                return;
+            }
+
+            let recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+
+            if (editandoId !== null) {
+                recetas[editandoId] = receta;
+                mostrarNotificacion('Receta actualizada con éxito', 'success');
+                editandoId = null;
+            } else {
+                recetas.push(receta);
+                mostrarNotificacion('Receta guardada con éxito', 'success');
+            }
+
+            localStorage.setItem('recetas', JSON.stringify(recetas));
+            cargarDatos();
+            limpiarFormulario();
+        });
+
+        // Cargar datos iniciales
+        cargarIngredientes();
+        cargarLugares();
+        cargarDatos();
+
+        function exportarPDF() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const ingredientes = JSON.parse(localStorage.getItem('ingredientes')) || [];
+            const lugares = JSON.parse(localStorage.getItem('lugares')) || [];
+
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            let y = 20;
+
+            doc.setFontSize(16);
+            doc.text("Recetas", 10, y);
+            y += 10;
+
+            recetas.forEach(receta => {
+                doc.setFontSize(12);
+                doc.text(`- ${receta.nombre}`, 15, y);
+                y += 7;
+            });
+
+            doc.setFontSize(16);
+            doc.text("Ingredientes", 10, y);
+            y += 10;
+
+            ingredientes.forEach(ingrediente => {
+                doc.setFontSize(12);
+                doc.text(`- ${ingrediente.nombre}`, 15, y);
+                y += 7;
+            });
+
+            doc.setFontSize(16);
+            doc.text("Lugares", 10, y);
+            y += 10;
+
+            lugares.forEach(lugar => {
+                doc.setFontSize(12);
+                doc.text(`- ${lugar.nombre}`, 15, y);
+                y += 7;
+            });
+
+            doc.save('recetas.pdf');
+        }
+
+        function exportarExcel() {
+            const recetas = JSON.parse(localStorage.getItem('recetas')) || [];
+            const ingredientes = JSON.parse(localStorage.getItem('ingredientes')) || [];
+            const lugares = JSON.parse(localStorage.getItem('lugares')) || [];
+
+            const wb = XLSX.utils.book_new();
+
+            const recetasWs = XLSX.utils.json_to_sheet(recetas);
+            XLSX.utils.book_append_sheet(wb, recetasWs, "Recetas");
+
+            const ingredientesWs = XLSX.utils.json_to_sheet(ingredientes);
+            XLSX.utils.book_append_sheet(wb, ingredientesWs, "Ingredientes");
+
+            const lugaresWs = XLSX.utils.json_to_sheet(lugares);
+            XLSX.utils.book_append_sheet(wb, lugaresWs, "Lugares");
+
+            XLSX.writeFile(wb, 'recetas.xlsx');
+        }
+    </script>
+</body>
+
+</html>
