@@ -58,10 +58,7 @@ app.post('/enviar-correo', (req, res) => {
     });
 });
 
-// Ruta para la página de asistentes
-app.get('/asistentes.html', function(req, res) {
-    res.sendFile(path.join(__dirname, 'asistentes.html'));
-});
+
 
 app.get('/index.html', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
